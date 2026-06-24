@@ -36,13 +36,13 @@ public class ProductResource {
 
     @POST
     @Transactional
-    public Response createProduct(Product product){
+    public Response addProduct(Product product){
         if (product.getName() != null || !product.getName().isEmpty()) {
             product.setName(product.getName().toLowerCase(Locale.ROOT));
         }
         productRepository.persist(product);
         logger.info("Product created: " + product.getName());
-        return Response.created(URI.create("/product/" + product.getId())).build();
+        return Response.created(URI.create("/product/" + product.getName())).build();
     }
 
     @PUT

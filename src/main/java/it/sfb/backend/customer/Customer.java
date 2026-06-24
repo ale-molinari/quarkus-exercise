@@ -1,9 +1,11 @@
 package it.sfb.backend.customer;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import it.sfb.backend.product.Product;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -12,7 +14,8 @@ public class Customer extends PanacheEntityBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @Column(name = "customer_id")
+    private UUID customerId;
 
     private String name;
 
@@ -23,11 +26,11 @@ public class Customer extends PanacheEntityBase {
     @Enumerated(EnumType.STRING)
     private EStatus status;
 
-//    @OneToMany(mappedBy = "customer")
-//    public List<Product> products;
+    @OneToMany(mappedBy = "customer")
+    public List<Product> products;
 
-    public UUID getId(){
-        return this.id;
+    public UUID getCustomerId(){
+        return this.customerId;
     }
 
     public String getName(){

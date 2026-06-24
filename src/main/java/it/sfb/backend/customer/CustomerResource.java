@@ -37,7 +37,7 @@ public class CustomerResource {
             customer.setName(customer.getName().toLowerCase(Locale.ROOT));
         }
         customerRepository.persist(customer);
-        return Response.created(URI.create("/customer/" + customer.getId())).build();
+        return Response.created(URI.create("/customer/" + customer.getCustomerId())).build();
     }
 
     @PUT

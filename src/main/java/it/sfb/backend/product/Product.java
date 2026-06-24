@@ -1,6 +1,7 @@
 package it.sfb.backend.product;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import it.sfb.backend.customer.Customer;
+import it.sfb.backend.shop.Shop;
 import jakarta.persistence.*;
 
 import java.util.UUID;
@@ -11,7 +12,8 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @Column(name = "product_id")
+    private UUID productId;
 
     private String name;
 
@@ -22,12 +24,20 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private EAvailability availability;
 
-    public UUID getId() {
-        return id;
+    @ManyToOne
+    @JoinColumn(name = "shop_id")
+    private Shop shop;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
+    public UUID getProductId() {
+        return productId;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public void setProductId(UUID productId) {
+        this.productId = productId;
     }
 
     public String getName() {

@@ -19,7 +19,7 @@ public class Shop {
 
     private String city;
 
-    @OneToMany(mappedBy = "shop")
+    @OneToMany(mappedBy = "shop", fetch = FetchType.EAGER)
     List<Product> products;
 
     public void setShopId(UUID shopId) {
@@ -44,5 +44,9 @@ public class Shop {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public List<Product> getProducts() {
+        return products;
     }
 }

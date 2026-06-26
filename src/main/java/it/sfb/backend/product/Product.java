@@ -17,18 +17,18 @@ public class Product {
 
     private String name;
 
-    private Long price;
+    private Double price;
 
     private Integer quantity;
 
     @Enumerated(EnumType.STRING)
     private EAvailability availability;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shop_id")
     private Shop shop;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
@@ -48,11 +48,11 @@ public class Product {
         this.name = name;
     }
 
-    public Long getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Long price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

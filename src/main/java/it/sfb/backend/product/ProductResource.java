@@ -18,9 +18,6 @@ import java.util.UUID;
 public class ProductResource {
 
     @Inject
-    Logger logger;
-
-    @Inject
     ProductRepository productRepository;
 
     @GET
@@ -37,12 +34,13 @@ public class ProductResource {
     @POST
     @Transactional
     public Response addProduct(Product product){
-        if (product.getName() != null || !product.getName().isEmpty()) {
-            product.setName(product.getName().toLowerCase(Locale.ROOT));
+        if (product == null) {
+            throw new IllegalArgumentException("Product cannot be null");
         }
-        productRepository.persist(product);
-        logger.info("Product created: " + product.getName());
-        return Response.created(URI.create("/product/" + product.getName())).build();
+        Product newProduct = productRepository.addProduct(product);
+        return Response.created(URI.create("/product/" + newProduct.getName()))
+                .entity(newProduct)
+                .build();
     }
 
     @PUT
@@ -53,23 +51,18 @@ public class ProductResource {
         if (entity == null) {
             throw new NotFoundException();
         }
-        entity.setName(product.getName());
-        entity.setPrice(product.getPrice());
-        entity.setQuantity(product.getQuantity());
-        entity.setAvailability(product.getAvailability());
-        logger.info("Product updated: " + entity.getName());
-        return entity;
+        return productRepository.updateProduct(entity, product);
     }
 
     @DELETE
     @Transactional
     @Path("/{id}")
-    public void deleteProduct(UUID id){
+    public Response deleteProduct(UUID id){
         Product entity = productRepository.findById(id);
         if (entity == null) {
             throw new NotFoundException();
         }
         productRepository.delete(entity);
-        logger.info("Product deleted: " + entity.getName());
+        return Response.ok().build();
     }
 }

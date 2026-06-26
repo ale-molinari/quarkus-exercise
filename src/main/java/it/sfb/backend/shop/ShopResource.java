@@ -1,6 +1,7 @@
 package it.sfb.backend.shop;
 
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -41,29 +42,30 @@ public class ShopResource {
     }
 
     @POST
+    @Transactional
     public Response addShop(Shop shop) {
-        if (shop.getName() != null || !shop.getName().isEmpty()) {
-            shop.setName(shop.getName().toLowerCase());
-            shopRepository.persist(shop);
-            return Response.created(URI.create("/shop/" + shop.getName())).build();
-        } else {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+        if (shop == null) {
+            throw new IllegalArgumentException("Shop cannot be null");
         }
+        Shop newShop = shopRepository.create(shop);
+        return Response.created(URI.create("/shop/" + newShop.getName()))
+                .entity(newShop)
+                .build();
     }
 
     @PUT
+    @Transactional
     @Path("/{id}")
     public Shop updateShop(UUID id, Shop shop) {
         Shop entity = shopRepository.findById(id);
         if (entity == null) {
             throw new NotFoundException();
         }
-        entity.setName(shop.getName());
-        entity.setCity(shop.getCity());
-        return entity;
+        return shopRepository.update(entity, shop);
     }
 
     @DELETE
+    @Transactional
     @Path("/{id}")
     public void deleteShop(UUID id) {
         shopRepository.deleteById(id);

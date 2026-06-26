@@ -19,6 +19,7 @@ public class Customer extends PanacheEntityBase {
 
     private String name;
 
+    @Column(unique = true)
     private String email;
 
     private LocalDate birthDate;
@@ -26,11 +27,15 @@ public class Customer extends PanacheEntityBase {
     @Enumerated(EnumType.STRING)
     private EStatus status;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
     public List<Product> products;
 
     public UUID getCustomerId(){
         return this.customerId;
+    }
+
+    public void setCustomerId(UUID customerId){
+        this.customerId = customerId;
     }
 
     public String getName(){
@@ -63,5 +68,13 @@ public class Customer extends PanacheEntityBase {
 
     public void setStatus(EStatus status){
         this.status = status;
+    }
+
+    public List<Product> getProducts(){
+        return this.products;
+    }
+
+    public void setProducts(List<Product> products){
+        this.products = products;
     }
 }

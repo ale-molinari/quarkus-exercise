@@ -33,11 +33,13 @@ public class CustomerResource {
     @POST
     @Transactional
     public Response createCustomer(Customer customer) {
-        if (customer.getName() != null || !customer.getName().isEmpty()) {
-            customer.setName(customer.getName().toLowerCase(Locale.ROOT));
+        if (customer == null) {
+            throw new IllegalArgumentException("Customer cannot be null");
         }
-        customerRepository.persist(customer);
-        return Response.created(URI.create("/customer/" + customer.getCustomerId())).build();
+        Customer newCustomer = customerRepository.create(customer);
+        return Response.created(URI.create("/customer/" + newCustomer.getCustomerId()))
+                .entity(newCustomer)
+                .build();
     }
 
     @PUT
@@ -48,11 +50,7 @@ public class CustomerResource {
         if (entity == null) {
             throw new NotFoundException();
         }
-
-        entity.setName(customer.getName());
-        entity.setEmail(customer.getEmail());
-        entity.setBirthDate(customer.getBirthDate());
-        return entity;
+        return customerRepository.update(entity, customer);
     }
 
     @PUT

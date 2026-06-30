@@ -1,7 +1,9 @@
 package it.sfb.backend.customer;
 
+import jakarta.enterprise.inject.build.compatible.spi.Validation;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -30,55 +32,32 @@ public class CustomerResource {
         return customerRepository.findById(id);
     }
 
+    @GET
+    @Path("/search/{name}")
+    public Customer search(String name) {
+        return customerRepository.findByName(name);
+    }
+
     @POST
-    @Transactional
-    public Response createCustomer(Customer customer) {
-        if (customer == null) {
-            throw new IllegalArgumentException("Customer cannot be null");
-        }
-        Customer newCustomer = customerRepository.create(customer);
+    public Response createCustomer(@Valid Customer customer) {
+        Customer newCustomer = customerRepository.createCustomer(customer);
         return Response.created(URI.create("/customer/" + newCustomer.getCustomerId()))
                 .entity(newCustomer)
                 .build();
     }
 
     @PUT
-    @Transactional
     @Path("/{id}")
     public Customer updateCustomer(UUID id, Customer customer) {
-        Customer entity = customerRepository.findById(id);
-        if (entity == null) {
-            throw new NotFoundException();
-        }
-        return customerRepository.update(entity, customer);
-    }
-
-    @PUT
-    @Transactional
-    @Path("{Id}")
-    public Customer updateCustomer(@PathParam("id") UUID id, EStatus status) {
-        Customer entity = customerRepository.findById(id);
-        if (entity == null) {
-            throw new NotFoundException();
-        }
-        entity.setStatus(status);
-        return entity;
+        Customer entity = customerRepository.findByIdOrThrow(id);
+        return customerRepository.updateCustomer(entity, customer);
     }
 
     @DELETE
-    @Transactional
     @Path("/{id}")
-    public void deleteCustomer(UUID id) {
-        Customer entity = customerRepository.findById(id);
-        if (entity == null) {
-            throw new NotFoundException();
-        }
-        customerRepository.delete(entity);
-    }
-
-    @GET
-    @Path("/search/{name}")
-    public Customer search(String name) {
-        return customerRepository.findByName(name);
+    public Response deleteCustomer(UUID id) {
+        Customer entity = customerRepository.findByIdOrThrow(id);
+        customerRepository.deleteCustomer(entity);
+        return Response.ok().build();
     }
 }

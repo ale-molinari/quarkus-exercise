@@ -67,6 +67,6 @@ public class ShopResourceTest {
                 .when().delete(PATH + "/{id}", id)
                 .then()
                 .assertThat()
-                .statusCode(204);
+                .statusCode(200);
     }
 }

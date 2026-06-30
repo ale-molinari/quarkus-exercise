@@ -22,7 +22,7 @@ public class ProductResourceTest {
     private static final String PATH = "/product";
 
     @BeforeAll
-    public static void setup(){
+    public static void setup() {
         Product product = new Product();
         product.setName("apple");
         product.setPrice(10.0);
@@ -31,26 +31,6 @@ public class ProductResourceTest {
 
         given()
                 .body(product).contentType("application/json")
-                .when().post(PATH);
-
-        Product product2 = new Product();
-        product2.setName("orange");
-        product2.setPrice(20.0);
-        product2.setQuantity(10);
-        product2.setAvailability(EAvailability.AVAILABLE);
-
-        given()
-                .body(product2).contentType("application/json")
-                .when().post(PATH);
-
-        Product product3 = new Product();
-        product3.setName("banana");
-        product3.setPrice(15.0);
-        product3.setQuantity(10);
-        product3.setAvailability(EAvailability.AVAILABLE);
-
-        given()
-                .body(product3).contentType("application/json")
                 .when().post(PATH);
     }
 

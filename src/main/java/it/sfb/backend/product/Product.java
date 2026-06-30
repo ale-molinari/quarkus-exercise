@@ -3,6 +3,7 @@ package it.sfb.backend.product;
 import it.sfb.backend.customer.Customer;
 import it.sfb.backend.shop.Shop;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.UUID;
 
@@ -15,8 +16,10 @@ public class Product {
     @Column(name = "product_id")
     private UUID productId;
 
+    @NotNull
     private String name;
 
+    @NotNull
     private Double price;
 
     private Integer quantity;

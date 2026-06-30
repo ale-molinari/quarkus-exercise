@@ -1,8 +1,8 @@
 package it.sfb.backend.customer;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import it.sfb.backend.product.Product;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -10,13 +10,14 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "customers")
-public class Customer extends PanacheEntityBase {
+public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "customer_id")
     private UUID customerId;
 
+    @NotNull
     private String name;
 
     @Column(unique = true)

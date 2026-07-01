@@ -2,7 +2,8 @@ package it.sfb.backend.customer;
 
 import it.sfb.backend.product.Product;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -17,9 +18,11 @@ public class Customer {
     @Column(name = "customer_id")
     private UUID customerId;
 
-    @NotNull
+    @NotBlank(message = "Name is required")
     private String name;
 
+    @Email
+    @NotBlank(message = "Email is required")
     @Column(unique = true)
     private String email;
 

@@ -2,6 +2,7 @@ package it.sfb.backend.shop;
 
 import it.sfb.backend.product.Product;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public class Shop {
     @Column(name = "shop_id")
     private UUID shopId;
 
-    @NotNull
+    @NotBlank(message = "Name is required")
     private String name;
 
     private String city;

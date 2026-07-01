@@ -1,8 +1,6 @@
 package it.sfb.backend.customer;
 
-import jakarta.enterprise.inject.build.compatible.spi.Validation;
 import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -10,7 +8,6 @@ import jakarta.ws.rs.core.Response;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
 
 @Path("/customer")

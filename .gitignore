@@ -47,3 +47,5 @@ nb-configuration.xml
 application.log
 
 src/main/resources/application.properties
+
+docker-compose.yaml

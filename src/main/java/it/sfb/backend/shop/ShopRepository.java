@@ -2,6 +2,7 @@ package it.sfb.backend.shop;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import io.quarkus.panache.common.Sort;
+import it.sfb.backend.IService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import org.jboss.logging.Logger;
@@ -12,25 +13,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 @ApplicationScoped
-public class ShopRepository implements PanacheRepositoryBase<Shop, UUID> {
+public class ShopRepository implements IService<Shop, UUID> {
 
     private static final Logger log = Logger.getLogger(ShopRepository.class);
-
-    public Shop findByIdOrThrow(UUID id) {
-        return findByIdOptional(id).orElseThrow(
-                () -> new IllegalArgumentException("Shop not found with id: " + id)
-        );
-    }
-
-    public Shop findByName(String name) {
-        return findByNameOptional(name).orElseThrow(
-                () -> new IllegalArgumentException("Shop not found with name: " + name)
-        );
-    }
-
-    public Optional<Shop> findByNameOptional(String name) {
-        return find("name", name).firstResultOptional();
-    }
 
     public List<Shop> findByCity() {
         return findAll(Sort.by("city")).stream().toList();

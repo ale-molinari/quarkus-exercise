@@ -1,6 +1,7 @@
 package it.sfb.backend.customer;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
+import it.sfb.backend.IService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import org.jboss.logging.Logger;
@@ -9,19 +10,9 @@ import java.util.Locale;
 import java.util.UUID;
 
 @ApplicationScoped
-public class CustomerRepository implements PanacheRepositoryBase<Customer, UUID> {
+public class CustomerRepository implements IService<Customer, UUID> {
 
     private static final Logger log = Logger.getLogger(CustomerRepository.class);
-
-    public Customer findByName(String name) {
-        return find("name", name).firstResult();
-    }
-
-    public Customer findByIdOrThrow(UUID id) {
-        return findByIdOptional(id).orElseThrow(
-                () -> new IllegalArgumentException("Customer not found with id: " + id)
-        );
-    }
 
     @Transactional
     public Customer createCustomer(Customer customer) {

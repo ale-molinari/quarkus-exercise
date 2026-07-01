@@ -3,6 +3,7 @@ package it.sfb.backend.product;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import io.quarkus.panache.common.Sort;
+import it.sfb.backend.IService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import org.jboss.logging.Logger;
@@ -13,29 +14,13 @@ import java.util.Optional;
 import java.util.UUID;
 
 @ApplicationScoped
-public class ProductRepository implements PanacheRepositoryBase<Product, UUID> {
+public class ProductRepository implements IService<Product, UUID> {
 
     private static final Logger log = Logger.getLogger(ProductRepository.class);
 
     public List<Product> sortByAscendingPrice() {
         PanacheQuery<Product> products = findAll(Sort.by("price").ascending());
         return products.list();
-    }
-
-    public Product findByIdOrThrow(UUID id) {
-        return findByIdOptional(id).orElseThrow(
-                () -> new IllegalArgumentException("Product not found with id: " + id)
-        );
-    }
-
-    public Product findByName(String name) {
-        return findByNameOptional(name).orElseThrow(
-                () -> new IllegalArgumentException("Product not found with name: " + name)
-        );
-    }
-
-    public Optional<Product> findByNameOptional(String name) {
-        return find("name", name).firstResultOptional();
     }
 
     @Transactional

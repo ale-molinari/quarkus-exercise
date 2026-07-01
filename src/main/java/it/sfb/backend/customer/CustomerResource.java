@@ -45,7 +45,7 @@ public class CustomerResource {
 
     @PUT
     @Path("/{id}")
-    public Customer updateCustomer(UUID id, Customer customer) {
+    public Customer updateCustomer(UUID id, @Valid Customer customer) {
         Customer entity = customerRepository.findByIdOrThrow(id);
         return customerRepository.updateCustomer(entity, customer);
     }

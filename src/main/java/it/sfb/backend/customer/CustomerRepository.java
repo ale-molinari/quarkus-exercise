@@ -1,6 +1,5 @@
 package it.sfb.backend.customer;
 
-import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import it.sfb.backend.IService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;

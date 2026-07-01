@@ -41,7 +41,7 @@ public class ProductResource {
 
     @PUT
     @Path("/{id}")
-    public Product updateProduct(UUID id, Product product){
+    public Product updateProduct(UUID id, @Valid Product product){
         Product entity = productRepository.findByIdOrThrow(id);
         return productRepository.updateProduct(entity, product);
     }

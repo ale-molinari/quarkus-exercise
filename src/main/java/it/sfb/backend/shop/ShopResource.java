@@ -53,7 +53,7 @@ public class ShopResource {
 
     @PUT
     @Path("/{id}")
-    public Shop updateShop(UUID id, Shop shop) {
+    public Shop updateShop(UUID id, @Valid Shop shop) {
         Shop entity = shopRepository.findByIdOrThrow(id);
         return shopRepository.updateShop(entity, shop);
     }

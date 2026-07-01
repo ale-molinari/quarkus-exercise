@@ -1,7 +1,6 @@
 package it.sfb.backend.shop;
 
 import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -9,7 +8,6 @@ import jakarta.ws.rs.core.Response;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Path("/shop")
@@ -28,19 +26,13 @@ public class ShopResource {
     @GET
     @Path("/{id}")
     public Shop getShopById(UUID id) {
-        return shopRepository.findById(id);
+        return shopRepository.findByIdOrThrow(id);
     }
 
     @GET
     @Path("/search/{name}")
     public Shop getShopByName(String name) {
         return shopRepository.findByName(name);
-    }
-
-    @GET
-    @Path("/search/{city}")
-    public List<Shop> getShopByCity() {
-        return shopRepository.findByCity();
     }
 
     @POST

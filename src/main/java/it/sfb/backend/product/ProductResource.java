@@ -9,7 +9,6 @@ import jakarta.validation.Valid;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Path("/product")
@@ -23,6 +22,12 @@ public class ProductResource {
     @GET
     public List<Product> getAllProducts(){
         return productRepository.listAll();
+    }
+
+    @GET
+    @Path("/id")
+    public Product getProductById(UUID id){
+        return productRepository.findByIdOrThrow(id);
     }
 
     @GET

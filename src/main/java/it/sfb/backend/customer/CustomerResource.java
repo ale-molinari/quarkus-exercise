@@ -26,7 +26,7 @@ public class CustomerResource {
     @GET
     @Path("{id}")
     public Customer getById(UUID id) {
-        return customerRepository.findById(id);
+        return customerRepository.findByIdOrThrow(id);
     }
 
     @GET

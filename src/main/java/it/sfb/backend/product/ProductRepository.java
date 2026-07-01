@@ -1,7 +1,6 @@
 package it.sfb.backend.product;
 
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
-import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import io.quarkus.panache.common.Sort;
 import it.sfb.backend.IService;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -10,7 +9,6 @@ import org.jboss.logging.Logger;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.UUID;
 
 @ApplicationScoped

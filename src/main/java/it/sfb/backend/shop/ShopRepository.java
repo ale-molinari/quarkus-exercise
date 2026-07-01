@@ -1,25 +1,17 @@
 package it.sfb.backend.shop;
 
-import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
-import io.quarkus.panache.common.Sort;
 import it.sfb.backend.IService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import org.jboss.logging.Logger;
 
-import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.UUID;
 
 @ApplicationScoped
 public class ShopRepository implements IService<Shop, UUID> {
 
     private static final Logger log = Logger.getLogger(ShopRepository.class);
-
-    public List<Shop> findByCity() {
-        return findAll(Sort.by("city")).stream().toList();
-    }
 
     @Transactional
     public Shop createShop(Shop shop) {
